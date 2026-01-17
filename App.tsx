@@ -2,13 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { EventsScreen } from './src/screens/eventScreen';
-import { EventDetails } from './src/screens/eventDetails';
+import { EventsScreen } from './src/screens/eventListScreen/eventScreen';
+import { EventDetails } from './src/screens/eventDetails/eventDetails';
 import { ActivityIndicator, Button, StyleSheet, View } from 'react-native';
 import { useFonts, JosefinSans_400Regular, JosefinSans_700Bold } from '@expo-google-fonts/josefin-sans'
 import { IconButton, MD3Colors } from 'react-native-paper';
-import { StartUpScreen } from './src/screens/startUpScreen';
-import { getPermissionFlag } from './src/store/permissionStorage';
+import { StartUpScreen } from './src/screens/startUpScreen/startUpScreen';
+import { getPermissionFlag } from './src/storage/permissionStorage';
 import { ScreenNames } from './src/types/screens';
 
 const Stack = createNativeStackNavigator();

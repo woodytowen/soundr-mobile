@@ -1,11 +1,11 @@
 import { ActivityIndicator, Animated, Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
-import { SoundrEvent } from '../types/event';
-import { useFetch } from '../util/hooks/useFetch';
-import { SOUNDR_EVENTS_URL } from '../services/api/apiRoutes';
-import { EventItem } from '../features/event-home/eventItem';
+import { SoundrEvent } from '../../types/event';
+import { useFetch } from '../../hooks/useFetch';
+import { SOUNDR_EVENTS_URL } from '../../services/api/apiRoutes';
+import { EventItem } from './components/eventItem';
 import * as Location from 'expo-location';
-import { getPermissionFlag } from '../store/permissionStorage';
+import { getPermissionFlag } from '../../storage/permissionStorage';
 
 export const EventsScreen = () => {
     const [location, setLocation] = useState<Location.LocationObject | null>(null);

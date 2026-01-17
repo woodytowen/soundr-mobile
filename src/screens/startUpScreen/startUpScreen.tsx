@@ -1,12 +1,12 @@
 import { useCallback, useRef } from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
-import { useTheme } from '../theme/ThemeContext';
+import { useTheme } from '../../theme/ThemeContext';
 
 import * as Location from 'expo-location';
 import { Button } from "react-native-paper";
-import { setPermissionFlag } from "../store/permissionStorage";
+import { setPermissionFlag } from "../../storage/permissionStorage";
 import { useNavigation } from "@react-navigation/native";
-import { ScreenNames } from "../types/screens";
+import { ScreenNames } from "../../types/screens";
 
 
 /**

@@ -1,10 +1,10 @@
 import { Button, Image, Linking, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
-import { SoundrEvent } from "../types/event";
-import { convertDate } from "../util/dateUtils";
+import { SoundrEvent } from "../../types/event";
+import { convertDate } from "../../util/dateUtils";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { CommonButton } from "../components/button";
+import { CommonButton } from "../../components/button";
 import React from "react";
-import { ScreenNames } from "../types/screens";
+import { ScreenNames } from "../../types/screens";
 
 type RootStackParamList = {
     EventDetails: { event: SoundrEvent };

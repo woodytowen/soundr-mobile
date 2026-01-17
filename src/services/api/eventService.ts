@@ -1,4 +1,4 @@
-import { FetchOptions } from "../types/fetch";
+import { FetchOptions } from "../../types/fetch";
 
 export async function fetchEvents(url: string, body?: any, options?: FetchOptions) {
   const fetchOptions: RequestInit = {

@@ -1,4 +1,4 @@
-import { getPermissionFlag } from "../store/permissionStorage"
+import { getPermissionFlag } from "../storage/permissionStorage"
 import * as Location from 'expo-location';
 import { SoundrLocation } from "../types/soundrEventRequest";
 

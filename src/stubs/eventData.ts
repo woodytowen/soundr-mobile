@@ -1,4 +1,4 @@
-const fakeData = {
+const eventData = {
     "success": true,
     "resultsLength": 38,
     "events": [
@@ -1113,4 +1113,4 @@ const fakeData = {
     ]
 }
 
-export default fakeData;
+export default eventData;

@@ -1,9 +1,9 @@
 import { memo, useCallback } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SoundrEvent } from "../../types/event";
+import { SoundrEvent } from "../../../types/event";
 import { useNavigation } from "@react-navigation/native";
-import { convertDate } from "../../util/dateUtils";
-import { ScreenNames } from "../../types/screens";
+import { convertDate } from "../../../util/dateUtils";
+import { ScreenNames } from "../../../types/screens";
 
 export const EventItem = memo((event: SoundrEvent) => {
     const navigation = useNavigation<any>();

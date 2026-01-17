@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import fakeData from './fakeData';
-import { FetchOptions } from '../../types/fetch';
-import { fetchEvents } from '../../services/eventService';
+import eventData from '../stubs/eventData';
+import { FetchOptions } from '../types/fetch';
+import { fetchEvents } from '../services/api/eventService';
 
 export function useFetch<T = any>(url: string, body?: any, options?: FetchOptions) {
   const [data, setData] = useState<T | null>(null);
