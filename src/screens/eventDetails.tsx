@@ -2,15 +2,16 @@ import { Button, Image, Linking, SafeAreaView, ScrollView, StyleSheet, Text, Vie
 import { SoundrEvent } from "../types/event";
 import { convertDate } from "../util/dateUtils";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { CommonButton } from "../components/common/button";
+import { CommonButton } from "../components/button";
 import React from "react";
+import { ScreenNames } from "../types/screens";
 
 type RootStackParamList = {
     EventDetails: { event: SoundrEvent };
 };
 
 export const EventDetails = () => {
-    const route = useRoute<RouteProp<RootStackParamList, 'EventDetails'>>();
+    const route = useRoute<RouteProp<RootStackParamList, ScreenNames.EventDetails>>();
     const { event } = route.params;
 
     const openEventUrl = (eventUrl: string) => {
@@ -35,9 +36,9 @@ export const EventDetails = () => {
                         <Text style={[styles.header, { color: '#FFFFFF', marginBottom: 30 }]}>{event.name}</Text>
                     </View> */}
                     <View style={styles.headerOverlay}>
-                                                <Text style={styles.headerText}>{event.name}</Text>
-                                                <View style={styles.headerUnderline} />
-                                            </View>
+                        <Text style={styles.headerText}>{event.name}</Text>
+                        <View style={styles.headerUnderline} />
+                    </View>
                 </View>
 
 

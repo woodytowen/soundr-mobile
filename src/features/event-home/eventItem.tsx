@@ -3,12 +3,13 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SoundrEvent } from "../../types/event";
 import { useNavigation } from "@react-navigation/native";
 import { convertDate } from "../../util/dateUtils";
+import { ScreenNames } from "../../types/screens";
 
 export const EventItem = memo((event: SoundrEvent) => {
     const navigation = useNavigation<any>();
 
     const onPress = useCallback(() => {
-        navigation.navigate('EventDetails', { event: event });
+        navigation.navigate(ScreenNames.EventDetails, { event: event });
     }, [navigation, event]);
 
     return (

@@ -1,18 +1,39 @@
 import { ActivityIndicator, Animated, Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { SoundrEvent } from '../types/event';
-import { fetchEvents } from '../services/eventService';
-import { StatusBar } from 'expo-status-bar';
-import { useFetch } from '../hooks/useFetch';
+import { useFetch } from '../util/hooks/useFetch';
 import { SOUNDR_EVENTS_URL } from '../services/api/apiRoutes';
-import { EventItem } from '../components/events/eventItem';
+import { EventItem } from '../features/event-home/eventItem';
+import * as Location from 'expo-location';
+import { getPermissionFlag } from '../store/permissionStorage';
 
 export const EventsScreen = () => {
+    const [location, setLocation] = useState<Location.LocationObject | null>(null);
+
+    useEffect(() => {
+        async function getCurrentLocation() {
+            if (await getPermissionFlag('locationPermission') === 'denied') {
+                setLocation(null); // Explicitly set to null if denied
+                return;
+            }
+            let location = await Location.getCurrentPositionAsync({});
+            setLocation(location);
+        }
+        getCurrentLocation();
+    }, []);
+
     const { data, isLoading, error, refresh } = useFetch<SoundrEvent[]>(
         SOUNDR_EVENTS_URL,
         {
-            "offset": 0,
-        },
+            offset: 0,
+            location: location
+                ? {
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude,
+                    radius: 100,
+                }
+                : undefined,
+        }
     );
 
     return (
@@ -27,7 +48,7 @@ export const EventsScreen = () => {
                     <Button title="Retry" onPress={refresh} />
                 </View>
             ) : data ? (
-                <View style={{flex: 1, marginBottom: 20}}>
+                <View style={{ flex: 1, marginBottom: 20 }}>
                     <View style={styles.headerBar}>
                         <Image
                             source={require('../../assets/dj-header.jpg')}

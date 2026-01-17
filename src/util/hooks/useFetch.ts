@@ -1,11 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import fakeData from './fakeData';
-
-interface FetchOptions {
-  method?: string;
-  body?: any;
-  headers?: Record<string, string>;
-}
+import { FetchOptions } from '../../types/fetch';
+import { fetchEvents } from '../../services/eventService';
 
 export function useFetch<T = any>(url: string, body?: any, options?: FetchOptions) {
   const [data, setData] = useState<T | null>(null);
@@ -15,21 +11,12 @@ export function useFetch<T = any>(url: string, body?: any, options?: FetchOption
 
   const isMounted = useRef(true);
 
+  //TODO Hook needs to be made re-usable - currently only focusing on events
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const fetchOptions: RequestInit = {
-        method: body ? 'POST' : 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(options?.headers || {}),
-        },
-        ...(body ? { body: JSON.stringify(body) } : {}),
-        ...options,
-      };
-      const response = await fetch(url, fetchOptions);
-      const result = await response.json();
+      const result = await fetchEvents(url, body, options);
       //const result = fakeData;
       if (isMounted.current) setData((result.events ?? result) as T);
     } catch (err: any) {

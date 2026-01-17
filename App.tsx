@@ -1,48 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { createStaticNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { EventsScreen } from './src/pages/eventScreen';
-import { EventDetails } from './src/pages/eventDetails';
+import { EventsScreen } from './src/screens/eventScreen';
+import { EventDetails } from './src/screens/eventDetails';
 import { ActivityIndicator, Button, StyleSheet, View } from 'react-native';
 import { useFonts, JosefinSans_400Regular, JosefinSans_700Bold } from '@expo-google-fonts/josefin-sans'
 import { IconButton, MD3Colors } from 'react-native-paper';
+import { StartUpScreen } from './src/screens/startUpScreen';
+import { getPermissionFlag } from './src/store/permissionStorage';
+import { ScreenNames } from './src/types/screens';
 
-const RootStack = createNativeStackNavigator({
-  screens: {
-    Events: {
-      screen: EventsScreen,
-      options: { headerShown: false }
-    },
-    EventDetails: {
-      screen: EventDetails,
-      options: {
-        headerShown: true,
-        headerTitle: '',
-        headerStyle: { backgroundColor: '#1A1A1A' },
-        headerTintColor: '#009EC3',
-        headerBackTitleVisible: false , // hides back button text
-        headerBackImage: () => (
-          <IconButton
-            icon="arrow-back"
-            size={24}
-            style={{ backgroundColor: '#1A1A1A' }}
-          />
-        ),
-        headerRight: () => (
-          <IconButton
-            icon="heart"
-            size={24}
-            iconColor={'#FF0080'}
-          />
-        ),
-      }
-    },
-  },
-});
-
-const Navigation = createStaticNavigation(RootStack);
-
+const Stack = createNativeStackNavigator();
 
 //Stack Navigator will be exported to seperate file + need auth wrapper eventually
 export default function App() {
@@ -50,7 +19,25 @@ export default function App() {
     JosefinSans_400Regular,
     JosefinSans_700Bold
   });
-  if (!fontsLoaded) {
+  const [initialRoute, setInitialRoute] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkPermission = async () => {
+      try {
+        // Replace 'locationPermission' with your actual flag key
+        const flag = await getPermissionFlag('locationPermission');
+        setInitialRoute(flag ? ScreenNames.Events : ScreenNames.StartUpScreen);
+      } catch (e) {
+        setInitialRoute(ScreenNames.StartUpScreen);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkPermission();
+  }, []);
+
+  if (!fontsLoaded || loading || !initialRoute) {
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -58,9 +45,43 @@ export default function App() {
     );
   }
 
-
   return (
-    <Navigation />
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName={initialRoute}
+        screenOptions={{
+          headerShown: false,
+          headerStyle: { backgroundColor: '#1A1A1A' },
+          headerTintColor: '#009EC3',
+        }}
+      >
+        <Stack.Screen name={ScreenNames.StartUpScreen} component={StartUpScreen} options={{ headerShown: false }} />
+        <Stack.Screen name={ScreenNames.Events} component={EventsScreen} options={{ headerShown: false }} />
+        <Stack.Screen
+          name={ScreenNames.EventDetails}
+          component={EventDetails}
+          options={{
+            headerShown: true,
+            headerTitle: '',
+            /* headerBackTitleVisible: false,
+            headerBackImage: () => (
+              <IconButton
+                icon="arrow-back"
+                size={24}
+                style={{ backgroundColor: '#1A1A1A' }}
+              />
+            ),
+            headerRight: () => (
+              <IconButton
+                icon="heart"
+                size={24}
+                iconColor={'#FF0080'}
+              />
+            ), */
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -72,11 +93,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 })
-
-{/* <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name='Soundr' component={EventsScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='EventDetails' component={EventsScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer> */}
 

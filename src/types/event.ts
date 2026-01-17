@@ -2,7 +2,7 @@ export type SoundrEvent = {
   name: string;
   date: string;
   venue: string;
-  artist: SoundrArtist[];  
+  artist: SoundrArtist[];
   sources?: EventSource[];
   venueDetails?: SoundrEventVenue;
   eventImageUrl?: string;
@@ -30,7 +30,6 @@ export type SoundrArtist = {
   spotifyArtistUrl?: string;
   //More room to also add insta links, facebook etc.
 };
-
 
 //SourceType
 export enum SourceType {
