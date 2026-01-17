@@ -16,7 +16,6 @@ import { ScreenNames } from "../../types/screens";
  * enablement available across the app
  */
 
-//TODO might need to revise how to use, useTheme 
 export const StartUpScreen = () => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const navigation = useNavigation<any>();
@@ -27,12 +26,9 @@ export const StartUpScreen = () => {
     }, [navigation]);
 
     const startPermissionsFlow = async () => {
-        console.log('Starting permissions flow');
         let { status } = await Location.requestForegroundPermissionsAsync();
 
-        console.log('Permission status:', status);
         if (status === 'granted') {
-            
             await setPermissionFlag('locationPermission', 'granted');
             onPress();
         } else {
@@ -118,6 +114,3 @@ export const StartUpScreen = () => {
         </View>
     );
 };
-
-
-// styles moved inside component to use theme

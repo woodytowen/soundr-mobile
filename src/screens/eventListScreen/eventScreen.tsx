@@ -1,7 +1,7 @@
-import { ActivityIndicator, Animated, Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
+import { useEffect, useState } from 'react';
 import { SoundrEvent } from '../../types/event';
-import { useFetch } from '../../hooks/useFetch';
+import { useEvents } from '../../hooks/useEvents';
 import { SOUNDR_EVENTS_URL } from '../../services/api/apiRoutes';
 import { EventItem } from './components/eventItem';
 import * as Location from 'expo-location';
@@ -18,11 +18,12 @@ export const EventsScreen = () => {
             }
             let location = await Location.getCurrentPositionAsync({});
             setLocation(location);
+            console.log('User location:', location);
         }
         getCurrentLocation();
     }, []);
 
-    const { data, isLoading, error, refresh } = useFetch<SoundrEvent[]>(
+    const { events, isLoading, error, refetch } = useEvents(
         SOUNDR_EVENTS_URL,
         {
             offset: 0,
@@ -38,20 +39,20 @@ export const EventsScreen = () => {
 
     return (
         <View style={{ flex: 1, backgroundColor: 'black' }}>
-            {isLoading && !data ? (
+            {isLoading && !events ? (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <ActivityIndicator size="large" />
+                    <ActivityIndicator size="large" color="white" />
                 </View>
             ) : error ? (
                 <View style={styles.container}>
                     <Text style={{ color: 'red' }}>Failed to load events: {error.message || 'Unknown error'}</Text>
-                    <Button title="Retry" onPress={refresh} />
+                    <Button title="Retry" onPress={refetch} />
                 </View>
-            ) : data ? (
+            ) : events ? (
                 <View style={{ flex: 1, marginBottom: 20 }}>
                     <View style={styles.headerBar}>
                         <Image
-                            source={require('../../assets/dj-header.jpg')}
+                            source={require('@assets/images/dj-header.jpg')}
                             style={styles.headerImage}
                         />
                         <View style={styles.headerOverlay}>
@@ -60,7 +61,7 @@ export const EventsScreen = () => {
                         </View>
                     </View>
                     <FlatList
-                        data={data}
+                        data={events}
                         keyExtractor={(item) => `${item.date}-${item.name}`}
                         renderItem={({ item }) => (
                             <EventItem {...item} />
@@ -68,7 +69,7 @@ export const EventsScreen = () => {
                         refreshControl={
                             <RefreshControl
                                 refreshing={isLoading}
-                                onRefresh={refresh}
+                                onRefresh={refetch}
                                 colors={['white']}
                                 progressBackgroundColor={'white'}
                             />
