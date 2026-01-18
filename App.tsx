@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { EventsScreen } from './src/screens/eventListScreen/eventScreen';
+import { EventsScreen } from './src/screens/eventsScreen/eventScreen';
 import { EventDetails } from './src/screens/eventDetails/eventDetails';
 import { ActivityIndicator, Button, StyleSheet, View } from 'react-native';
 import { useFonts, JosefinSans_400Regular, JosefinSans_700Bold } from '@expo-google-fonts/josefin-sans'
@@ -63,21 +63,6 @@ export default function App() {
           options={{
             headerShown: true,
             headerTitle: '',
-            /* headerBackTitleVisible: false,
-            headerBackImage: () => (
-              <IconButton
-                icon="arrow-back"
-                size={24}
-                style={{ backgroundColor: '#1A1A1A' }}
-              />
-            ),
-            headerRight: () => (
-              <IconButton
-                icon="heart"
-                size={24}
-                iconColor={'#FF0080'}
-              />
-            ), */
           }}
         />
       </Stack.Navigator>

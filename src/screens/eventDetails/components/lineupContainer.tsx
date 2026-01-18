@@ -1,12 +1,12 @@
-import { SoundrEvent } from "@models/event";
+import { SoundrArtist } from "@models/event";
 import { StyleSheet, Text, View } from "react-native";
 
-export const LineupContainer = ({ event }: { event: SoundrEvent }) => {
+export const LineupContainer = ({ artist }: { artist: SoundrArtist[] }) => {
     return (
         <View style={styles.lineupColumn}>
             <Text style={[styles.header, { marginTop: 20, marginBottom: 20, textAlign: 'left' }]}>LINEUP</Text>
-            {event.artist.length > 0 ? (
-                event.artist.map((artist, idx) => (
+            {artist.length > 0 ? (
+                artist.map((artist, idx) => (
                     <Text key={idx} style={[styles.text, { textAlign: 'left', marginLeft: 10, marginBottom: 10 }]}>
                         {artist.artistName}
                     </Text>

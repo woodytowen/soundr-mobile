@@ -1,17 +1,19 @@
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, ImageSourcePropType, StyleSheet, Text, View } from "react-native"
 
-export const EventBanner = ({ eventImageUrl, eventName }: { eventImageUrl: string, eventName: string }) => {
+interface EventHeaderProps {
+    title: string;
+    imageSource: ImageSourcePropType;
+}
 
-    const imageSource = () => {
-        return eventImageUrl ? { uri: eventImageUrl } : require("@assets/images/default-event.png");
-    }
-
+export const EventHeader = ({ title, imageSource }: EventHeaderProps) => {
     return (
-        <View style={styles.imageHeaderWrapper}>
-            <Image source={imageSource()} style={styles.image} />
-            <View style={styles.imageOverlay} />
+        <View style={styles.headerBar}>
+            <Image
+                source={imageSource}
+                style={styles.headerImage}
+            />
             <View style={styles.headerOverlay}>
-                <Text style={styles.headerText}>{eventName}</Text>
+                <Text style={styles.headerText}>{title}</Text>
                 <View style={styles.headerUnderline} />
             </View>
         </View>
@@ -19,22 +21,23 @@ export const EventBanner = ({ eventImageUrl, eventName }: { eventImageUrl: strin
 }
 
 const styles = StyleSheet.create({
-    imageHeaderWrapper: {
+    headerBar: {
         width: '100%',
         height: 200,
+        backgroundColor: 'black',
         position: 'relative',
-        marginBottom: 20,
-        borderRadius: 10,
-        overflow: 'hidden',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-start',
+        marginBottom: 20
     },
-    image: {
+    headerImage: {
         width: '100%',
         height: '100%',
+        opacity: 0.3,
+        position: 'absolute',
+        top: 0,
+        left: 0,
         resizeMode: 'cover',
-    },
-    imageOverlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0,0,0,0.6)',
     },
     headerOverlay: {
         position: 'absolute',
@@ -58,7 +61,7 @@ const styles = StyleSheet.create({
         shadowColor: '#00E5FF',
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 1,
-        shadowRadius: 10, 
+        shadowRadius: 10, // Adjust this for the blur intensity
         elevation: 5
     },
-})
+});

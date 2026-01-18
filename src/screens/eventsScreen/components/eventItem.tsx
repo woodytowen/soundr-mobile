@@ -40,13 +40,11 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(0, 229, 255, 0.6)',
         borderWidth: 2,
         backgroundColor: 'black',
-
         // Shadow for iOS
         shadowColor: '#00E5FF',
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.7,
         shadowRadius: 5,
-
         // Shadow for Android
         elevation: 8,
     },

@@ -3,10 +3,10 @@ import { SoundrEvent } from "../../types/event";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import React, { useCallback } from "react";
 import { ScreenNames } from "../../types/screens";
-import { EventBanner } from "./components/eventBanner";
 import { InformationContainer } from "./components/informationContainer";
 import { TicketsContainer } from "./components/ticketsContainer/ticketsContainer";
 import { LineupContainer } from "./components/lineupContainer";
+import { EventHeader } from "@components/eventComponents/eventHeader";
 
 type RootStackParamList = {
     EventDetails: { event: SoundrEvent };
@@ -23,11 +23,11 @@ export const EventDetails = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-                <EventBanner eventImageUrl={event.eventImageUrl ?? ""} eventName={event.name} />
+                <EventHeader title={event.name} imageSource={event.eventImageUrl ? { uri: event.eventImageUrl } : require('@assets/images/dj-header.jpg')} />
                 <InformationContainer date={event.date} venueName={event.venue} venueDetails={event.venueDetails} />
                 <View style={styles.lineupTicketContainer}>
                     <View style={styles.lineupTicketsRow}>
-                        <LineupContainer event={event} />
+                        <LineupContainer artist={event.artist} />
                         <TicketsContainer event={event} openEventUrl={openEventUrl} />
                     </View>
                 </View>
