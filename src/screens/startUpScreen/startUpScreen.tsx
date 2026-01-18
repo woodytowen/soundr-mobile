@@ -1,12 +1,12 @@
 import { useCallback, useRef } from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
-import { useTheme } from '../theme/ThemeContext';
+import { useTheme } from '../../theme/ThemeContext';
 
 import * as Location from 'expo-location';
 import { Button } from "react-native-paper";
-import { setPermissionFlag } from "../store/permissionStorage";
+import { setPermissionFlag } from "../../storage/permissionStorage";
 import { useNavigation } from "@react-navigation/native";
-import { ScreenNames } from "../types/screens";
+import { ScreenNames } from "../../types/screens";
 
 
 /**
@@ -16,7 +16,6 @@ import { ScreenNames } from "../types/screens";
  * enablement available across the app
  */
 
-//TODO might need to revise how to use, useTheme 
 export const StartUpScreen = () => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const navigation = useNavigation<any>();
@@ -27,12 +26,9 @@ export const StartUpScreen = () => {
     }, [navigation]);
 
     const startPermissionsFlow = async () => {
-        console.log('Starting permissions flow');
         let { status } = await Location.requestForegroundPermissionsAsync();
 
-        console.log('Permission status:', status);
         if (status === 'granted') {
-            
             await setPermissionFlag('locationPermission', 'granted');
             onPress();
         } else {
@@ -118,6 +114,3 @@ export const StartUpScreen = () => {
         </View>
     );
 };
-
-
-// styles moved inside component to use theme

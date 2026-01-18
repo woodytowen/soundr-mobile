@@ -1,9 +1,9 @@
 import { memo, useCallback } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SoundrEvent } from "../../types/event";
+import { SoundrEvent } from "../../../types/event";
 import { useNavigation } from "@react-navigation/native";
-import { convertDate } from "../../util/dateUtils";
-import { ScreenNames } from "../../types/screens";
+import { convertDate } from "../../../util/dateUtils";
+import { ScreenNames } from "../../../types/screens";
 
 export const EventItem = memo((event: SoundrEvent) => {
     const navigation = useNavigation<any>();
@@ -39,16 +39,12 @@ const styles = StyleSheet.create({
         position: 'relative',
         borderColor: 'rgba(0, 229, 255, 0.6)',
         borderWidth: 2,
-        // Remove or comment out overflow: 'hidden' to allow shadow to show
-        // overflow: 'hidden',
         backgroundColor: 'black',
-
         // Shadow for iOS
         shadowColor: '#00E5FF',
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.7,
         shadowRadius: 5,
-
         // Shadow for Android
         elevation: 8,
     },
@@ -64,7 +60,7 @@ const styles = StyleSheet.create({
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0,0,0,0.3)', // semi-transparent overlay for readability
+        backgroundColor: 'rgba(0,0,0,0.3)',
     },
     textOverlay: {
         ...StyleSheet.absoluteFillObject,
